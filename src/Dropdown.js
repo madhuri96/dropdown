@@ -1,39 +1,26 @@
-import { useState } from "react";
-import './Dropdown.css'; //import Dropdown.css
+import React from "react";
+import {
+  DropdownWrapper,
+  StyledSelect,
+  StyledOption,
+  StyledLabel,
+  StyledButton
+} from "./styles.js";
 
-//create vairiables of dropdown component and create and use functions to return result of list items using useState and other functions
-const Dropdown = () => {
-
-    const [isActive, setActive] = useState(false);
-    const [list] = useState(['Yes', 'Probably not']);
-    const [value, setValue] = useState('');
-
-    const onClickHandeler = (e) => {
-        setValue(e.target.textContent);
-        setActive(false);
-    }
-
-    const onMouseHover = () => {
-        setActive(true);
-    }
-
-    const results = list.map((result, index) => {
-        return <a href="/#" onClick={onClickHandeler} key={index}>{result}</a>;
-    })
-
-    return (
-        <div className="dropdown">
-            <h1>Should you use a dropdown?</h1>
-            <button className="dropbtn" onMouseEnter={onMouseHover}>Select</button>
-            <div className="dropdown-content" style={{ display: `${isActive ? 'block' : 'none'}` }}>
-                {results}
-            </div>
-            <div>
-            
-            <h3>Ans:  {value}</h3>
-            </div>
-        </div>
-    );
+export function Dropdown(props) {
+  return (
+    <DropdownWrapper action={props.action}>
+      <StyledLabel htmlFor="services">{props.formLabel}</StyledLabel>
+      <StyledSelect id="services" name="services">
+        {props.children}
+      </StyledSelect>
+      <StyledButton type="submit" value={props.buttonText} />
+    </DropdownWrapper>
+  );
 }
 
-export default Dropdown;
+export function Option(props) {
+  return (
+    <StyledOption defaultValue={props.selected}>{props.value}</StyledOption>
+  );
+}
